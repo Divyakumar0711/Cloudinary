@@ -26,33 +26,32 @@ const socialFormats = {
             setIsTransforming(true);
         }
     }, [selectedFormat, uploadedImage])
-
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if(!file) return;
-        setIsUploading(true);
-        const formData = new FormData();
-        formData.append("file", file);
+      const file = event.target.files?.[0];
+      if(!file) return;
+      setIsUploading(true);
+      const formData = new FormData();
+      formData.append("file", file);
 
-        try {
-            const response = await fetch("/api/image-upload", {
-                method: "POST",
-                body: formData
-            })
+      try {
+          const response = await fetch("/api/image-upload", {
+              method: "POST",
+              body: formData
+          })
 
-            if(!response.ok) throw new Error("Failed to upload image");
+          if(!response.ok) throw new Error("Failed to upload image");
 
-            const data = await response.json();
-            setUploadedImage(data.publicId);
+          const data = await response.json();
+          setUploadedImage(data.publicId);
 
 
-        } catch (error) {
-            console.log(error)
-            alert("Failed to upload image");
-        } finally{
-            setIsUploading(false);
-        }
-    };
+      } catch (error) {
+          console.log(error)
+          alert("Failed to upload image");
+      } finally{
+          setIsUploading(false);
+      }
+  };
 
     const handleDownload = () => {
         if(!imageRef.current) return;
